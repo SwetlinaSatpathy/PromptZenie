@@ -1,5 +1,11 @@
 #!/bin/bash
+set -e
+
+# Start Ollama in background
 ollama serve &
-sleep 5
-ollama pull phi3:mini
-uvicorn server:app --host 0.0.0.0 --port 8080
+
+# Use Render-provided PORT or default 8080
+PORT=${PORT:-8080}
+
+# Start FastAPI server
+uvicorn server:app --host 0.0.0.0 --port $PORT
